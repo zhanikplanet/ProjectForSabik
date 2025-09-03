@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{{.Name}}</title>
+    <style>
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #1d2671, #c33764);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        header a {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #ff7eb3;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 25px;
+            font-size: 0.95em;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        header a:hover {
+            background: #ff4f81;
+            transform: scale(1.05);
+        }
+
+        .card {
+            max-width: 650px;
+            margin: 50px auto;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            padding: 40px 30px;
+            border-radius: 25px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            animation: slideUp 0.8s ease-out;
+        }
+
+        img {
+            border-radius: 50%;
+            margin-bottom: 20px;
+            border: 5px solid #fff;
+            width: 220px;
+            height: 220px;
+            object-fit: cover;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+        }
+
+        h2 {
+            margin: 15px 0;
+            font-size: 2.2em;
+            letter-spacing: 1px;
+        }
+
+        .info {
+            font-size: 1.05em;
+            line-height: 1.7;
+            color: #f1f1f1;
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        .info p {
+            margin: 10px 0;
+            padding: 10px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 12px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            margin-top: auto;
+            font-size: 0.9em;
+        }
+
+        /* Анимации */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(40px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="/">← Назад</a>
+    </header>
+
+    <div class="card">
+        <img src="{{.Image}}" alt="{{.Name}}">
+        <h2>{{.Name}}</h2>
+        <div class="info">
+            <p><strong>Участники:</strong> {{range .Members}}{{.}}, {{end}}</p>
+            <p><strong>Первый альбом:</strong> {{.FirstAlbum}}</p>
+            <p><strong>Год создания:</strong> {{.CreationDate}}</p>
+            <p><strong>Даты:</strong> {{range .Dates.Dates}} {{.}}, {{end}}</p>
+            <p><strong>Концерты по городам:</strong></p>
+            <ul>
+                {{range $city, $dates := .Relation.DatesLocations}}
+                <li><strong>{{$city}}</strong>: {{range $dates}}{{.}}, {{end}}</li>
+                {{end}}
+            </ul>
+    
+        </div>
+    </div>
+
+    <footer>
+        © 2025 Groupie Tracker
+    </footer>
+</body>
+</html>
